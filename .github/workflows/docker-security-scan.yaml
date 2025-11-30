@@ -41,3 +41,13 @@ jobs:
       uses: hadolint/hadolint-action@v3.1.0
       with:
         dockerfile: ${{ steps.changed-dockerfiles.outputs.all_changed_files }}
+        format: json
+        output-file: hadolint-results.json
+
+    - name: Upload results as artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: hadolint-results
+        path: |
+          hadolint-results.json
+        retention-days: 30
