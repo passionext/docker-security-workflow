@@ -17,11 +17,11 @@ jobs:
     # Steps are individual tasks to complete.
     steps:
 
-# GitHub automatically sets the $GITHUB_WORKSPACE environment variable to the runner's working directory, and by default, the directory is empty. The actions/checkout action clones the GitHub repo to $GITHUB_WORKSPACE to accomplish various jobs, such as building, testing, and deploying the code. 
+    # GitHub automatically sets the $GITHUB_WORKSPACE environment variable to the runner's working directory, and by default, the directory is empty. The actions/checkout action clones the GitHub repo to $GITHUB_WORKSPACE to accomplish various jobs, such as building, testing, and deploying the code. 
     - name: Checkout code
       uses: actions/checkout@v4
 
-# This step is used to apply all the checks only to Dockerfiles that have been changed.
+    # This step is used to apply all the checks only to Dockerfiles that have been changed.
     - name: Detect changed Dockerfiles
       id: changed-dockerfiles
       uses: tj-actions/changed-files@v44
@@ -29,12 +29,12 @@ jobs:
         files: |
           docker#*/Dockerfile
 
-# Hadolint is a powerful and lightweight Dockerfile linter that helps developers write cleaner, more secure, and more efficient container images. In the world of modern software development, containers are the backbone of application deployment, and Dockerfiles are at the center of this ecosystem. Dockerfiles define the instructions to build container images, meaning even minor mistakes in them can lead to security flaws, bloated image sizes, or unstable deployments.
-      - name: Skip if no Dockerfiles changed
-        if: steps.changed-dockerfiles.outputs.any_changed == 'false'
-        run: |
-          echo "No Dockerfiles changed - skipping security scan"
-          exit 0
+    # Hadolint is a powerful and lightweight Dockerfile linter that helps developers write cleaner, more secure, and more efficient container images. In the world of modern software development, containers are the backbone of application deployment, and Dockerfiles are at the center of this ecosystem. Dockerfiles define the instructions to build container images, meaning even minor mistakes in them can lead to security flaws, bloated image sizes, or unstable deployments.
+    - name: Skip if no Dockerfiles changed
+      if: steps.changed-dockerfiles.outputs.any_changed == 'false'
+      run: |
+        echo "No Dockerfiles changed - skipping security scan"
+        exit 0
 
     - name: Scan changed Dockerfiles
       if: steps.changed-dockerfiles.outputs.any_changed == 'true'
