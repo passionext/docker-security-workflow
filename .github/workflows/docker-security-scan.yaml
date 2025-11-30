@@ -27,7 +27,7 @@ jobs:
       uses: tj-actions/changed-files@v44
       with:
         files: |
-          docker#*/Dockerfile
+          docker/**/Dockerfile
 
     # Hadolint is a powerful and lightweight Dockerfile linter that helps developers write cleaner, more secure, and more efficient container images. In the world of modern software development, containers are the backbone of application deployment, and Dockerfiles are at the center of this ecosystem. Dockerfiles define the instructions to build container images, meaning even minor mistakes in them can lead to security flaws, bloated image sizes, or unstable deployments.
     - name: Skip if no Dockerfiles changed
