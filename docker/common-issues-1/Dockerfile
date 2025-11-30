@@ -1,6 +1,5 @@
 # docker/common-issues-1/Dockerfile
 # Here's a problematic Dockerfile that will trigger multiple Hadolint warnings.
-
 FROM ubuntu:latest
 
 LABEL maintainer="developer@company.com"
