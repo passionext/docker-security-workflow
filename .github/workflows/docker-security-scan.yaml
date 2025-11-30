@@ -29,6 +29,15 @@ jobs:
         files: |
           docker/**/Dockerfile
 
+    - name: Create results file (always run)
+      run: |
+        if [ "${{ steps.changed-dockerfiles.outputs.any_changed }}" == "true" ]; then
+          echo "Dockerfiles changed - scan will run"
+        else
+          echo "No Dockerfiles changed" > hadolint-results.json
+          echo '{"scan_skipped": true, "reason": "No Dockerfiles changed"}' > hadolint-results.json
+        fi
+        
     # Hadolint is a powerful and lightweight Dockerfile linter that helps developers write cleaner, more secure, and more efficient container images. In the world of modern software development, containers are the backbone of application deployment, and Dockerfiles are at the center of this ecosystem. Dockerfiles define the instructions to build container images, meaning even minor mistakes in them can lead to security flaws, bloated image sizes, or unstable deployments.
     - name: Skip if no Dockerfiles changed
       if: steps.changed-dockerfiles.outputs.any_changed == 'false'
@@ -48,6 +57,5 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: hadolint-results
-        path: |
-          hadolint-results.json
+        path: hadolint-results.json
         retention-days: 30
